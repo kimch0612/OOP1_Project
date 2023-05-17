@@ -10,13 +10,27 @@
 using namespace std;
 
 int rand_int, win = 0;
-string word_print, wintext;
-string word_list[10] = {"아", "집가고싶다", "진짜루다가", "ㄹㅇ;;", "1", "2" , "3" , "4" , "5" , "6"};
+string word_print, word_previous, wintext;
+string word_list[] = {
+    "물건", "사람", "집중", "즐거움", "행복", "사랑", "음식", "꿈꾸다", "공부", "건강",
+    "웃음", "도전", "성공", "생각", "친구", "가족", "여행", "자유", "도움", "열정",
+    "희망", "기다림", "도움", "긍정", "기쁨", "용기", "믿음", "존중", "자신", "소중",
+    "자리", "여유", "느낌", "협력", "경험", "창조", "성장", "소통", "환경", "행동",
+    "발전", "변화", "기대", "영감", "미래", "추억", "설레임", "신뢰", "아름다움", "힘내다"
+    };
 
 void word(){
-    srand((unsigned int)time(NULL));
-    rand_int = rand() % 10;
-    word_print = word_list[rand_int];
+    while (true){
+        srand((unsigned int)time(NULL));
+        rand_int = rand() % 50;
+        word_print = word_list[rand_int];
+
+        if (word_previous == word_print) continue;
+        else {
+            word_previous = word_print;
+            break;
+        }
+    }
 }
 
 MainWindow::MainWindow(QWidget *parent)
