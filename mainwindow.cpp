@@ -1,13 +1,27 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include <QMovie>
+/*
+프로그램이 GUI를 사용하는데 필요한 전처리기들
+*/
 #include <iostream>
 #include <cstdlib> // 랜덤으로 단어를 뽑아내기 위한 난수 생성 관련 전처리기
 #include <ctime> // 좀 더 다양한 난수를 생성하기 위한 전처리기
 #include <string> // String문을 사용하기 위한 전처리기
-#include <windows.h> // Sleep()문을 사용하기 위한 전처리기
 
 using namespace std;
+
+/*
+
+/// 변수 이름 설명 ///
+rand_int : word_list에서 랜덤으로 단어를 뽑아내기 위한 난수를 저장할 변수
+win : 단어 입력 성공 횟수를 저장할 변수
+word_print : 랜덤으로 뽑아낸 단어를 저장할 string 타입의 변수
+word_previous : 직전에 뽑힌 단어를 저장해뒀다가 추후 새로 뽑힌 단어와 중복되진 않는지 체크하는 용도로 사용되는 변수
+wintext : 현재 몇승중인지 표시하기 위한 String을 저장하는 용도로 사용하는 변수
+word_list : 단어들이 들어있는 리스트
+
+*/
 
 int rand_int, win = 0;
 string word_print, word_previous, wintext;
@@ -27,8 +41,8 @@ string word_list[] = {
 
 void word(){
     while (true){
-        srand((unsigned int)time(NULL));
-        rand_int = rand() % 100;
+        srand((unsigned int)time(NULL)); // 난수를 더 다양하게 생성하기 위해 현재의 시간을 불러와 난수를 생성하는데 사용함
+        rand_int = rand() % 100; // 난수를 생성해주는데, 그 범위를 100까지로 한정함
         word_print = word_list[rand_int];
         /*
         제시어가 직전에 주워진 것과 지금의 것이 같은지 확인하고
