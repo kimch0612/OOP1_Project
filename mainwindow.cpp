@@ -9,9 +9,15 @@
 
 using namespace std;
 
-int rand_int;
-string word_print;
+int rand_int, win = 0;
+string word_print, wintext;
 string word_list[10] = {"아", "집가고싶다", "진짜루다가", "ㄹㅇ;;", "1", "2" , "3" , "4" , "5" , "6"};
+
+void word(){
+    srand((unsigned int)time(NULL));
+    rand_int = rand() % 10;
+    word_print = word_list[rand_int];
+}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -22,9 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->main_image->setMovie(Movie);
     Movie->setScaledSize(QSize(240,240));
     Movie->start();
-    srand((unsigned int)time(NULL));
-    rand_int = rand() % 10;
-    word_print = word_list[rand_int];
+    word();
     QString qstr = QString::fromStdString(word_print);
     ui->word_title->setText(qstr);
 }
@@ -44,17 +48,21 @@ void MainWindow::on_enter_clicked()
         ui->main_image->setMovie(Movie);
         Movie->setScaledSize(QSize(240,240));
         Movie->start();
+        win = 0;
     }
     else {
-        ui->word_tf->setText("성공했습니다!");
+        win++;
+        string win_str = to_string(win);
+        wintext = "성공했습니다! 현재 " + win_str + "연속 성공중입니다.";
+        QString wintext_qstr = QString::fromStdString(wintext);
+        ui->word_tf->setText(wintext_qstr);
         QMovie *Movie=new QMovie("C:/Users/Chals/Documents/OOP1_Project/img/success.gif");
         ui->main_image->setMovie(Movie);
         Movie->setScaledSize(QSize(240,240));
         Movie->start();
     }
-    srand((unsigned int)time(NULL));
-    rand_int = rand() % 10;
-    word_print = word_list[rand_int];
+    ui->word_input->setText("");
+    word();
     QString qstr = QString::fromStdString(word_print);
     ui->word_title->setText(qstr);
 }
