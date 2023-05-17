@@ -10,7 +10,8 @@
 using namespace std;
 
 int rand_int;
-std::string word_print;
+string word_print;
+string word_list[10] = {"아", "집가고싶다", "진짜루다가", "ㄹㅇ;;", "1", "2" , "3" , "4" , "5" , "6"};
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -22,7 +23,6 @@ MainWindow::MainWindow(QWidget *parent)
     Movie->start();
     srand((unsigned int)time(NULL));
     rand_int = rand() % 10;
-    string word_list[10] = {"아", "집가고싶다", "진짜루다가", "ㄹㅇ;;", "1", "2" , "3" , "4" , "5" , "6"};
     word_print = word_list[rand_int];
     QString qstr = QString::fromStdString(word_print);
     ui->word_title->setText(qstr);
@@ -49,5 +49,10 @@ void MainWindow::on_enter_clicked()
         ui->main_image->setMovie(Movie);
         Movie->start();
     }
+    srand((unsigned int)time(NULL));
+    rand_int = rand() % 10;
+    word_print = word_list[rand_int];
+    QString qstr = QString::fromStdString(word_print);
+    ui->word_title->setText(qstr);
 }
 
