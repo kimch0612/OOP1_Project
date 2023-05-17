@@ -12,5 +12,5 @@
 - Open CMakeLists.txt with Qt Creator IDE
 - Build and Run without Debug mode
 
-## P..
+## P.s.
 - I didn't upload the img folder due to copyright issues.
