@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     QMovie *Movie=new QMovie("C:/Users/Chals/Documents/OOP1_Project/img/main.gif");
     ui->main_image->setMovie(Movie);
+    Movie->setScaledSize(QSize(240,240));
     Movie->start();
     srand((unsigned int)time(NULL));
     rand_int = rand() % 10;
@@ -41,12 +42,14 @@ void MainWindow::on_enter_clicked()
         ui->word_tf->setText("틀렸습니다!");
         QMovie *Movie=new QMovie("C:/Users/Chals/Documents/OOP1_Project/img/failed.gif");
         ui->main_image->setMovie(Movie);
+        Movie->setScaledSize(QSize(240,240));
         Movie->start();
     }
     else {
         ui->word_tf->setText("성공했습니다!");
         QMovie *Movie=new QMovie("C:/Users/Chals/Documents/OOP1_Project/img/success.gif");
         ui->main_image->setMovie(Movie);
+        Movie->setScaledSize(QSize(240,240));
         Movie->start();
     }
     srand((unsigned int)time(NULL));
