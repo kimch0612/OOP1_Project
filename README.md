@@ -1,4 +1,4 @@
-# OOP1_Project
+# OOP1 Team Project
 
 ## Environment
 | Type | Content |
