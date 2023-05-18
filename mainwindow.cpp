@@ -67,19 +67,22 @@ void word(){
     }
 }
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget *parent) // MainWindow Activity에서 사용되는 함수
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     QMainWindow::setWindowFlags( Qt::WindowTitleHint |  Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint ); // 창 최대화 기능 비활성화
     ui->setupUi(this);
+    /*
+    맨 처음 실행시 나오는 GIF 애니메이션 재생
+    */
     QMovie *Movie=new QMovie("C:/Users/Chals/Documents/OOP1_Project/img/main.gif");
     ui->main_image->setMovie(Movie);
     Movie->setScaledSize(QSize(240,240));
     Movie->start();
-    word();
-    QString qstr = QString::fromStdString(word_print);
-    ui->word_title->setText(qstr);
+    word(); //  무작위 단어 생성
+    QString qstr = QString::fromStdString(word_print); // 무작위로 생성한 단어가 String 타입이므로 GUI에서 사용 가능한 타입인 QString으로 캐스팅
+    ui->word_title->setText(qstr); // 무작위로 생성한 단어를 word_title의 Text값으로 Setting
 }
 
 MainWindow::~MainWindow()
