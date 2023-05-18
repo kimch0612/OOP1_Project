@@ -113,8 +113,11 @@ void MainWindow::on_enter_clicked() // enter button 클릭 시 실행될 event �
         win = 0;
     }
     else {
+    /*
+    정답을 입력했을시 win의 값을 1만큼 추가하고 재생중인 GIF 애니메이션을 success 애니메이션으로 교체한다
+    */
         win++;
-        string win_str = to_string(win);
+        string win_str = to_string(win); // int에서 str로 캐스팅을 해주는 이유는 C++에선 정수열과 문자열을 동시에 사용할 수 없기 때문이다.
         wintext = "성공했습니다! 현재 " + win_str + "연속 성공중입니다.";
         QString wintext_qstr = QString::fromStdString(wintext);
         ui->word_tf->setText(wintext_qstr);
@@ -123,8 +126,8 @@ void MainWindow::on_enter_clicked() // enter button 클릭 시 실행될 event �
         Movie->setScaledSize(QSize(240,240));
         Movie->start();
     }
-    ui->word_input->setText("");
-    word();
+    ui->word_input->setText(""); // 사용자가 텍스트를 입력하는 label의 text 값을 초기화
+    word(); // 무작위 단어 생성 후 제시어 텍스트 교체
     QString qstr = QString::fromStdString(word_print);
     ui->word_title->setText(qstr);
 }
