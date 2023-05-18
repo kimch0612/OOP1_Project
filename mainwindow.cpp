@@ -8,7 +8,7 @@
 #include <cstdlib> // 랜덤으로 단어를 뽑아내기 위한 난수 생성 관련 전처리기
 #include <ctime> // 좀 더 다양한 난수를 생성하기 위한 전처리기
 #include <string> // String문을 사용하기 위한 전처리기
-#include <QTimer>
+#include <QTimer> // 시간제한 기능을 구현하기 위한 전처리기
 
 using namespace std;
 
@@ -21,6 +21,8 @@ word_print : 랜덤으로 뽑아낸 단어를 저장할 string 타입의 변수
 word_previous : 직전에 뽑힌 단어를 저장해뒀다가 추후 새로 뽑힌 단어와 중복되진 않는지 체크하는 용도로 사용되는 변수
 wintext : 현재 몇승중인지 표시하기 위한 String을 저장하는 용도로 사용하는 변수
 word_list : 단어들이 들어있는 리스트
+word_input : 사용자가 입력한 text 값을 QString 형식으로 저장할 변수
+word_input_str : QString 형식으로 저장된 값을 String 형식으로 변환해 저장할 변수
 
 */
 
@@ -90,11 +92,19 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_enter_clicked()
+void MainWindow::on_enter_clicked() // enter button 클릭 시 실행될 event 함수
 {
+    /*
+    사용자가 word_input에 입력된 text 값을 QString Type으로 불러온 후
+    일반적으로 C++에서 사용 가능한 String 형식으로 캐스팅해준다
+    */
     QString word_input = ui->word_input->toPlainText();
     std::string word_input_str = word_input.toStdString();
-    if (word_input_str != word_print) {
+    if (word_input_str != word_print) { // 사용자가 입력한 값을 word_print의 값과 비교한 후 같지 않다면 if문을, 같다면 else문을 실행한다
+    /*
+    오답을 입력했을시 '틀렸습니다!'라는 문자와 함께 재생중인 GIF 애니메이션을 Failed 애니메이션으로 교체한다
+    그리고 연승을 기록하는 변수인 win을 0으로 초기화한다
+    */
         ui->word_tf->setText("틀렸습니다!");
         QMovie *Movie=new QMovie("C:/Users/Chals/Documents/OOP1_Project/img/failed.gif");
         ui->main_image->setMovie(Movie);
