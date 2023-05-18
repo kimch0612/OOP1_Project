@@ -52,7 +52,7 @@ string word_list[] = {
 void word(){
     while (true){
         srand((unsigned int)time(NULL)); // 난수를 더 다양하게 생성하기 위해 현재의 시간을 불러와 난수를 생성하는데 사용함
-        rand_int = rand() % 200; // 난수를 생성해주는데, 그 범위를 100까지로 한정함
+        rand_int = rand() % 200; // 난수를 생성해주는데, 그 범위를 200까지로 한정함
         word_print = word_list[rand_int];
         /*
         제시어가 직전에 주워진 것과 지금의 것이 같은지 확인하고
