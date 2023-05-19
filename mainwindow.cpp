@@ -16,6 +16,7 @@ using namespace std;
 
 /// 변수 이름 설명 ///
 rand_int : word_list에서 랜덤으로 단어를 뽑아내기 위한 난수를 저장할 변수
+speed : 제한시간을 저장할 변수
 win : 단어 입력 성공 횟수를 저장할 변수
 word_print : 랜덤으로 뽑아낸 단어를 저장할 string 타입의 변수
 word_previous : 직전에 뽑힌 단어를 저장해뒀다가 추후 새로 뽑힌 단어와 중복되진 않는지 체크하는 용도로 사용되는 변수
@@ -26,7 +27,7 @@ word_input_str : QString 형식으로 저장된 값을 String 형식으로 변�
 
 */
 
-int rand_int, win = 0;
+int rand_int, speed, win = 0;
 string word_print, word_previous, wintext;
 string word_list[] = {
     "물건", "사람", "집중", "즐거움", "행복", "사랑", "음식", "꿈꾸다", "공부", "건강",
@@ -83,7 +84,7 @@ MainWindow::MainWindow(QWidget *parent) // MainWindow Activity에서 사용되�
     QString qstr = QString::fromStdString(word_print); // 무작위로 생성한 단어가 String 타입이므로 GUI에서 사용 가능한 타입인 QString으로 캐스팅
     ui->word_title->setText(qstr); // 무작위로 생성한 단어를 word_title의 Text값으로 Setting
     timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(handleTimerTimeout()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(on_enter_clicked()));
     timer->start(5000);
 }
 
@@ -126,21 +127,6 @@ void MainWindow::on_enter_clicked() // enter button 클릭 시 실행될 event �
         Movie->setScaledSize(QSize(240,240));
         Movie->start();
     }
-    ui->word_input->setText(""); // 사용자가 텍스트를 입력하는 label의 text 값을 초기화
-    word(); // 무작위 단어 생성 후 제시어 텍스트 교체
-    QString qstr = QString::fromStdString(word_print);
-    ui->word_title->setText(qstr);
-    timer->stop();
-    timer->start(5000);
-}
-
-void MainWindow::handleTimerTimeout() {
-    ui->word_tf->setText("틀렸습니다!");
-    QMovie *Movie=new QMovie("C:/Users/Chals/Documents/OOP1_Project/img/failed.gif");
-    ui->main_image->setMovie(Movie);
-    Movie->setScaledSize(QSize(240,240));
-    Movie->start();
-    win = 0;
     ui->word_input->setText(""); // 사용자가 텍스트를 입력하는 label의 text 값을 초기화
     word(); // 무작위 단어 생성 후 제시어 텍스트 교체
     QString qstr = QString::fromStdString(word_print);
