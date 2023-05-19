@@ -111,7 +111,7 @@ void MainWindow::on_enter_clicked() // enter button 클릭 시 실행될 event �
     if (word_input_str != word_print) { // 사용자가 입력한 값을 word_print의 값과 비교한 후 같지 않다면 if문을, 같다면 else문을 실행한다
     /*
     오답을 입력했을시 '틀렸습니다!'라는 문자와 함께 재생중인 GIF 애니메이션을 Failed 애니메이션으로 교체한다
-    그리고 연승을 기록하는 변수인 win을 0으로 초기화하고 speed도 5000으로 초기화한다.
+    그리고 연승을 기록하는 변수인 win을 0으로 초기화하고 speed와 remainingTime도 5000으로 초기화한다.
     */
         ui->word_tf->setText("틀렸습니다!");
         QMovie *Movie=new QMovie("C:/Users/Chals/Documents/OOP1_Project/img/failed.gif");
@@ -124,7 +124,7 @@ void MainWindow::on_enter_clicked() // enter button 클릭 시 실행될 event �
     }
     else {
     /*
-    정답을 입력했을시 speed의 값은 150만큼 감소,
+    정답을 입력했을시 speed의 값은 150만큼 감소, remainingTime은 speed의 값과 동기화
     win의 값을 1만큼 추가하고 재생중인 GIF 애니메이션을 success 애니메이션으로 교체한다
     */
         speed -= 150;
@@ -140,16 +140,18 @@ void MainWindow::on_enter_clicked() // enter button 클릭 시 실행될 event �
         Movie->start();
     }
     ui->word_input->setText(""); // 사용자가 텍스트를 입력하는 label의 text 값을 초기화
+
     word(); // 무작위 단어 생성 후 제시어 텍스트 교체
     QString qstr = QString::fromStdString(word_print);
     ui->word_title->setText(qstr);
-    timer_word->stop();
+
+    timer_word->stop(); // 실행중인 타이머를 멈췄다가 다시 실행함으로써 타이머의 잔여시간 초기화
     timer_word->start(speed);
 }
 
 void MainWindow::updateLabel() {
-    remainingTime -= 150;
-    string remainingTime_str = to_string(remainingTime);
-    QString remainingTime_qstr = QString::fromStdString(remainingTime_str);
-    ui->remaining_time->setText("남은 시간(ms): " + remainingTime_qstr);
+    remainingTime -= 150; // remainingTime을 150만큼 감소
+    string remainingTime_str = to_string(remainingTime); // int형을 str형으로 캐스팅
+    QString remainingTime_qstr = QString::fromStdString(remainingTime_str); // Str형을 QString형으로 캐스팅
+    ui->remaining_time->setText("남은 시간(ms): " + remainingTime_qstr); // remaining_time label text값 업데이트
 }
