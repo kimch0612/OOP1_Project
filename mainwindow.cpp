@@ -76,21 +76,23 @@ MainWindow::MainWindow(QWidget *parent) // MainWindow Activity에서 사용되�
 {
     QMainWindow::setWindowFlags( Qt::WindowTitleHint |  Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint ); // 창 최대화 기능 비활성화
     ui->setupUi(this);
+
     QMovie *Movie=new QMovie("C:/Users/Chals/Documents/OOP1_Project/img/main.gif"); // 맨 처음 실행시 나오는 GIF 애니메이션 재생
     ui->main_image->setMovie(Movie);
     Movie->setScaledSize(QSize(240,240));
     Movie->start();
+
     word(); //  무작위 단어 생성
     QString qstr = QString::fromStdString(word_print); // 무작위로 생성한 단어가 String 타입이므로 GUI에서 사용 가능한 타입인 QString으로 캐스팅
     ui->word_title->setText(qstr); // 무작위로 생성한 단어를 word_title의 Text값으로 Setting
 
-    timer_word = new QTimer(this);
+    timer_word = new QTimer(this); // 입력 제한시간을 제어하는 Timer 선언
     connect(timer_word, SIGNAL(timeout()), this, SLOT(on_enter_clicked()));
-    timer_word->start(speed);
+    timer_word->start(speed); // speed의 값을 불러와 해당하는 초만큼 on_enter_clicked()함수 실행
 
-    timer_remaining = new QTimer(this);
+    timer_remaining = new QTimer(this); // 사용자에게 제한시간을 알려주는 Timer 선언
     connect(timer_remaining, SIGNAL(timeout()), this, SLOT(updateLabel()));
-    timer_remaining->start(150);
+    timer_remaining->start(150); // 150초마다 updateLabel()함수 실행
 }
 
 MainWindow::~MainWindow()
