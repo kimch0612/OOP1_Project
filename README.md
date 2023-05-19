@@ -9,6 +9,7 @@
 | IDE | Desktop Qt 6.5.0 MinGW 64-Bit & Code-Server (VSC) |
 
 ## Application Structure
+![Structure](https://github.com/kimch0612/OOP1_Project/assets/10193967/3e5a3ca2-006e-47f9-84ab-688034f85f71)
 
 ## Execution
 - Open CMakeLists.txt with Qt Creator IDE
