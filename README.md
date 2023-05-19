@@ -17,4 +17,4 @@
 - Build and Run without Debug mode
 
 ## P.s.
-- I didn't upload the img folder due to copyright issues.
+- 저작권 이슈로 img 폴더는 업로드하지 않았습니다.
