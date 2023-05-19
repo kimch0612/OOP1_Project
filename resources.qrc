@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>img/failed.gif</file>
+        <file>img/main.gif</file>
+        <file>img/success.gif</file>
+    </qresource>
+</RCC>

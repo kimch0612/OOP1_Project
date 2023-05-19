@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include <QMovie>
+#include <QTimer> // 시간제한 기능을 구현하기 위한 전처리기
 /*
 프로그램이 GUI를 사용하는데 필요한 전처리기들
 */
@@ -8,7 +9,6 @@
 #include <cstdlib> // 랜덤으로 단어를 뽑아내기 위한 난수 생성 관련 전처리기
 #include <ctime> // 좀 더 다양한 난수를 생성하기 위한 전처리기
 #include <string> // String문을 사용하기 위한 전처리기
-#include <QTimer> // 시간제한 기능을 구현하기 위한 전처리기
 
 using namespace std;
 
@@ -77,7 +77,7 @@ MainWindow::MainWindow(QWidget *parent) // MainWindow Activity에서 사용되�
     QMainWindow::setWindowFlags( Qt::WindowTitleHint |  Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint ); // 창 최대화 기능 비활성화
     ui->setupUi(this);
 
-    QMovie *Movie=new QMovie("C:/Users/Chals/Documents/OOP1_Project/img/main.gif"); // 맨 처음 실행시 나오는 GIF 애니메이션 재생
+    QMovie *Movie=new QMovie("c:/img/main.gif"); // 맨 처음 실행시 나오는 GIF 애니메이션 재생
     ui->main_image->setMovie(Movie);
     Movie->setScaledSize(QSize(240,240));
     Movie->start();
@@ -114,7 +114,7 @@ void MainWindow::on_enter_clicked() // enter button 클릭 시 실행될 event �
     그리고 연승을 기록하는 변수인 win을 0으로 초기화하고 speed와 remainingTime도 5000으로 초기화한다.
     */
         ui->word_tf->setText("틀렸습니다!");
-        QMovie *Movie=new QMovie("C:/Users/Chals/Documents/OOP1_Project/img/failed.gif");
+        QMovie *Movie=new QMovie("c:/img/failed.gif");
         ui->main_image->setMovie(Movie);
         Movie->setScaledSize(QSize(240,240));
         Movie->start();
@@ -141,7 +141,7 @@ void MainWindow::on_enter_clicked() // enter button 클릭 시 실행될 event �
         wintext = "성공했습니다! 현재 " + win_str + "연속 성공중입니다.";
         QString wintext_qstr = QString::fromStdString(wintext);
         ui->word_tf->setText(wintext_qstr);
-        QMovie *Movie=new QMovie("C:/Users/Chals/Documents/OOP1_Project/img/success.gif");
+        QMovie *Movie=new QMovie("c:/img/success.gif");
         ui->main_image->setMovie(Movie);
         Movie->setScaledSize(QSize(240,240));
         Movie->start();
