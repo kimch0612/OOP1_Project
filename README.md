@@ -8,6 +8,8 @@
 | Compiler | MinGW 11.2.0 64-Bit for C++ |
 | IDE | Desktop Qt 6.5.0 MinGW 64-Bit & Code-Server (VSC) |
 
+## Application Structure
+
 ## Execution
 - Open CMakeLists.txt with Qt Creator IDE
 - Build and Run without Debug mode
