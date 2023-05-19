@@ -27,7 +27,7 @@ word_input_str : QString 형식으로 저장된 값을 String 형식으로 변�
 
 */
 
-int rand_int, speed, win = 0;
+int rand_int, speed = 5000, win = 0;
 string word_print, word_previous, wintext;
 string word_list[] = {
     "물건", "사람", "집중", "즐거움", "행복", "사랑", "음식", "꿈꾸다", "공부", "건강",
@@ -85,7 +85,7 @@ MainWindow::MainWindow(QWidget *parent) // MainWindow Activity에서 사용되�
     ui->word_title->setText(qstr); // 무작위로 생성한 단어를 word_title의 Text값으로 Setting
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(on_enter_clicked()));
-    timer->start(5000);
+    timer->start(speed);
 }
 
 MainWindow::~MainWindow()
@@ -112,11 +112,13 @@ void MainWindow::on_enter_clicked() // enter button 클릭 시 실행될 event �
         Movie->setScaledSize(QSize(240,240));
         Movie->start();
         win = 0;
+        speed = 5000;
     }
     else {
     /*
     정답을 입력했을시 win의 값을 1만큼 추가하고 재생중인 GIF 애니메이션을 success 애니메이션으로 교체한다
     */
+        speed -= 150;
         win++;
         string win_str = to_string(win); // int에서 str로 캐스팅을 해주는 이유는 C++에선 정수열과 문자열을 동시에 사용할 수 없기 때문이다.
         wintext = "성공했습니다! 현재 " + win_str + "연속 성공중입니다.";
@@ -132,5 +134,5 @@ void MainWindow::on_enter_clicked() // enter button 클릭 시 실행될 event �
     QString qstr = QString::fromStdString(word_print);
     ui->word_title->setText(qstr);
     timer->stop();
-    timer->start(5000);
+    timer->start(speed);
 }
