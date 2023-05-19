@@ -27,7 +27,7 @@ word_input_str : QString 형식으로 저장된 값을 String 형식으로 변�
 
 */
 
-int rand_int, speed = 5000, win = 0, remainingTime  = 5000;
+int high_win, rand_int, speed = 5000, win = 0, remainingTime  = 5000;
 string word_print, word_previous, wintext;
 string word_list[] = {
     "물건", "사람", "집중", "즐거움", "행복", "사랑", "음식", "꿈꾸다", "공부", "건강",
@@ -118,6 +118,13 @@ void MainWindow::on_enter_clicked() // enter button 클릭 시 실행될 event �
         ui->main_image->setMovie(Movie);
         Movie->setScaledSize(QSize(240,240));
         Movie->start();
+        if (high_win < win){ // high_win이 win보다 값이 적으면 high_score label의 text 값을 win으로 갱신한다.
+            string win_str = to_string(win);
+            wintext = "최고기록: " + win_str;
+            QString wintext_qstr = QString::fromStdString(wintext);
+            ui->high_score->setText(wintext_qstr);
+            high_win = win;
+        }
         win = 0;
         speed = 5000;
         remainingTime = 5000;
