@@ -17,9 +17,10 @@ public:
 
 private slots:
     void on_enter_clicked();
-
+    void updateLabel();
 private:
     Ui::MainWindow *ui;
-    QTimer* timer;
+    QTimer *timer_word;
+    QTimer *timer_remaining;
 };
 #endif // MAINWINDOW_H

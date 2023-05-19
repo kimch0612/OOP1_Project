@@ -27,7 +27,7 @@ word_input_str : QString 형식으로 저장된 값을 String 형식으로 변�
 
 */
 
-int rand_int, speed = 5000, win = 0;
+int rand_int, speed = 5000, win = 0, remainingTime  = 5000;
 string word_print, word_previous, wintext;
 string word_list[] = {
     "물건", "사람", "집중", "즐거움", "행복", "사랑", "음식", "꿈꾸다", "공부", "건강",
@@ -83,9 +83,14 @@ MainWindow::MainWindow(QWidget *parent) // MainWindow Activity에서 사용되�
     word(); //  무작위 단어 생성
     QString qstr = QString::fromStdString(word_print); // 무작위로 생성한 단어가 String 타입이므로 GUI에서 사용 가능한 타입인 QString으로 캐스팅
     ui->word_title->setText(qstr); // 무작위로 생성한 단어를 word_title의 Text값으로 Setting
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(on_enter_clicked()));
-    timer->start(speed);
+
+    timer_word = new QTimer(this);
+    connect(timer_word, SIGNAL(timeout()), this, SLOT(on_enter_clicked()));
+    timer_word->start(speed);
+
+    timer_remaining = new QTimer(this);
+    connect(timer_remaining, SIGNAL(timeout()), this, SLOT(updateLabel()));
+    timer_remaining->start(150);
 }
 
 MainWindow::~MainWindow()
@@ -104,7 +109,7 @@ void MainWindow::on_enter_clicked() // enter button 클릭 시 실행될 event �
     if (word_input_str != word_print) { // 사용자가 입력한 값을 word_print의 값과 비교한 후 같지 않다면 if문을, 같다면 else문을 실행한다
     /*
     오답을 입력했을시 '틀렸습니다!'라는 문자와 함께 재생중인 GIF 애니메이션을 Failed 애니메이션으로 교체한다
-    그리고 연승을 기록하는 변수인 win을 0으로 초기화한다
+    그리고 연승을 기록하는 변수인 win을 0으로 초기화하고 speed도 5000으로 초기화한다.
     */
         ui->word_tf->setText("틀렸습니다!");
         QMovie *Movie=new QMovie("C:/Users/Chals/Documents/OOP1_Project/img/failed.gif");
@@ -113,12 +118,15 @@ void MainWindow::on_enter_clicked() // enter button 클릭 시 실행될 event �
         Movie->start();
         win = 0;
         speed = 5000;
+        remainingTime = 5000;
     }
     else {
     /*
-    정답을 입력했을시 win의 값을 1만큼 추가하고 재생중인 GIF 애니메이션을 success 애니메이션으로 교체한다
+    정답을 입력했을시 speed의 값은 150만큼 감소,
+    win의 값을 1만큼 추가하고 재생중인 GIF 애니메이션을 success 애니메이션으로 교체한다
     */
         speed -= 150;
+        remainingTime = speed;
         win++;
         string win_str = to_string(win); // int에서 str로 캐스팅을 해주는 이유는 C++에선 정수열과 문자열을 동시에 사용할 수 없기 때문이다.
         wintext = "성공했습니다! 현재 " + win_str + "연속 성공중입니다.";
@@ -133,6 +141,13 @@ void MainWindow::on_enter_clicked() // enter button 클릭 시 실행될 event �
     word(); // 무작위 단어 생성 후 제시어 텍스트 교체
     QString qstr = QString::fromStdString(word_print);
     ui->word_title->setText(qstr);
-    timer->stop();
-    timer->start(speed);
+    timer_word->stop();
+    timer_word->start(speed);
+}
+
+void MainWindow::updateLabel() {
+    remainingTime -= 150;
+    string remainingTime_str = to_string(remainingTime);
+    QString remainingTime_qstr = QString::fromStdString(remainingTime_str);
+    ui->remaining_time->setText("남은 시간(ms): " + remainingTime_qstr);
 }
