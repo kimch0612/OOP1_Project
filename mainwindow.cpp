@@ -85,6 +85,9 @@ MainWindow::MainWindow(QWidget *parent) // MainWindow Activity에서 사용되�
     word(); //  무작위 단어 생성
     QString qstr = QString::fromStdString(word_print); // 무작위로 생성한 단어가 String 타입이므로 GUI에서 사용 가능한 타입인 QString으로 캐스팅
     ui->word_title->setText(qstr); // 무작위로 생성한 단어를 word_title의 Text값으로 Setting
+    QTimer *timer = new QTimer(this); // 제한시간(5초)마다 on_enter_clicked() 함수를 실행함
+    connect(timer, SIGNAL(timeout()), this, SLOT(on_enter_clicked()));
+    timer->start(5000);
 }
 
 MainWindow::~MainWindow()
