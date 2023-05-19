@@ -17,8 +17,10 @@ public:
 
 private slots:
     void on_enter_clicked();
+    void handleTimerTimeout();
 
 private:
     Ui::MainWindow *ui;
+    QTimer* timer;
 };
 #endif // MAINWINDOW_H

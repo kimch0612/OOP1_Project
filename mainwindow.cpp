@@ -75,18 +75,15 @@ MainWindow::MainWindow(QWidget *parent) // MainWindow Activity에서 사용되�
 {
     QMainWindow::setWindowFlags( Qt::WindowTitleHint |  Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint ); // 창 최대화 기능 비활성화
     ui->setupUi(this);
-    /*
-    맨 처음 실행시 나오는 GIF 애니메이션 재생
-    */
-    QMovie *Movie=new QMovie("C:/Users/Chals/Documents/OOP1_Project/img/main.gif");
+    QMovie *Movie=new QMovie("C:/Users/Chals/Documents/OOP1_Project/img/main.gif"); // 맨 처음 실행시 나오는 GIF 애니메이션 재생
     ui->main_image->setMovie(Movie);
     Movie->setScaledSize(QSize(240,240));
     Movie->start();
     word(); //  무작위 단어 생성
     QString qstr = QString::fromStdString(word_print); // 무작위로 생성한 단어가 String 타입이므로 GUI에서 사용 가능한 타입인 QString으로 캐스팅
     ui->word_title->setText(qstr); // 무작위로 생성한 단어를 word_title의 Text값으로 Setting
-    QTimer *timer = new QTimer(this); // 제한시간(5초)마다 on_enter_clicked() 함수를 실행함
-    connect(timer, SIGNAL(timeout()), this, SLOT(on_enter_clicked()));
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(handleTimerTimeout()));
     timer->start(5000);
 }
 
@@ -133,5 +130,21 @@ void MainWindow::on_enter_clicked() // enter button 클릭 시 실행될 event �
     word(); // 무작위 단어 생성 후 제시어 텍스트 교체
     QString qstr = QString::fromStdString(word_print);
     ui->word_title->setText(qstr);
+    timer->stop();
+    timer->start(5000);
 }
 
+void MainWindow::handleTimerTimeout() {
+    ui->word_tf->setText("틀렸습니다!");
+    QMovie *Movie=new QMovie("C:/Users/Chals/Documents/OOP1_Project/img/failed.gif");
+    ui->main_image->setMovie(Movie);
+    Movie->setScaledSize(QSize(240,240));
+    Movie->start();
+    win = 0;
+    ui->word_input->setText(""); // 사용자가 텍스트를 입력하는 label의 text 값을 초기화
+    word(); // 무작위 단어 생성 후 제시어 텍스트 교체
+    QString qstr = QString::fromStdString(word_print);
+    ui->word_title->setText(qstr);
+    timer->stop();
+    timer->start(5000);
+}
