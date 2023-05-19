@@ -14,7 +14,7 @@
 
 ## 빌드 및 실행 방법
 - Open CMakeLists.txt with Qt Creator IDE
-- Build and Run without Debug mode
+- Build and Run with Debug mode
 
 ## P.s.
 - 저작권 이슈로 img 폴더는 업로드하지 않았습니다.
